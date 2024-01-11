@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babycam</title>
+    <!-- Favicon und Apple Touch Icon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <meta name="apple-mobile-web-app-title" content="Babycam">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- Bootstrap CSS und Google Font einbinden -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Grundlegende Style-Definitionen */
+        body {
+            font-family: 'Baloo Bhaijaan 2', cursive;
+            padding-top: 20px;
+            margin: 0;
+            background-image: url('https://nilababyshop.com/wp-content/uploads/2023/03/pngtree-simple-and-cute-baby-baptism-background-picture-image_1334701.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: #f8f9fa;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 5px;
+            text-align: center;
+        }
+        h1 {
+            color: #add8e6; /* Soft blue */
+        }
+        /* Runder Button für das Power-Off Symbol */
+        .btn-circle {
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            padding: 10px;
+            font-size: 24px;
+            line-height: 1.33;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .power-symbol {
+            position: relative;
+            top: -2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Ladeanimation, die vor dem Starten der Streams angezeigt wird -->
+    <div id="loadingAnimation">
+        <img src="https://image.spreadshirtmedia.net/image-server/v1/designs/16096466,width=178,height=178.png" alt="Loading...">
+    </div>
+    <!-- Container für die Auswahl von Stream-Typen -->
+    <div class="container text-center">
+        <h1 class="mt-5">Select Stream Type</h1>
+        <div class="mt-4">
+            <a id="startVideo" href="/video" class="btn btn-primary">Video and Audio</a>
+            <a id="startAudio" href="/audio" class="btn btn-secondary">Audio Only</a>
+        </div>
+    </div>
+    <!-- Button zum sicheren Herunterfahren des Systems -->
+    <div class="mt-3">
+        <form action="/power-off" method="post">
+            <button type="submit" class="btn btn-danger btn-circle">
+                <span class="power-symbol">&#x23FB;</span>
+            </button>
+        </form>
+    </div>
+    <!-- Script für die Handhabung der Ladeanimation und Stream-Auswahl -->
+    <script>
+        document.getElementById("startVideo").addEventListener("click", function () {
+            showLoadingAndRedirect('/video');
+        });
+        document.getElementById("startAudio").addEventListener("click", function () {
+            showLoadingAndRedirect('/audio');
+        });
+        function showLoadingAndRedirect(url) {
+            document.getElementById("loadingAnimation").style.display = 'block';
+            document.querySelector(".container").style.display = 'none';
+        }
+        window.onload = function () {
+            document.getElementById("loadingAnimation").style.display = 'none';
+            document.querySelector(".container").style.display = 'block';
+        };
+    </script>
+</body>
+</html>

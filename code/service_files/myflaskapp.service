@@ -1,0 +1,17 @@
+# Service-Datei für die Flask-Anwendung
+[Unit]
+Description=Gunicorn instance to serve my Flask app
+# Stellt sicher, dass das Netzwerk verfügbar ist, bevor der Service startet
+After=network.target
+
+[Service]
+User=baranjoe
+Group=www-data
+WorkingDirectory=/home/baranjoe/flask_server
+ExecStart=/usr/bin/authbind --deep /home/baranjoe/.local/bin/gunicorn --workers 3 --bind 0.0.0.0:80 app:app
+# Umgebungsvariablen für Home Assistant werden hier ebenfalls gesetzt
+Environment="HASS_SERVER=http://192.168.1.168:8123"
+Environment="HASS_TOKEN=XXX" # Token entfernt aus Sicherheitsgründen
+
+[Install]
+WantedBy=multi-user.target

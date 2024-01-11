@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babycam</title>
+    <!-- Favicon und Apple Touch Icon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <meta name="apple-mobile-web-app-title" content="Babycam">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- Einbindung von Bootstrap und Google Fonts -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Grundlegende Stildefinitionen */
+        body {
+            font-family: 'Baloo Bhaijaan 2', cursive;
+            padding-top: 20px;
+            margin: 0;
+            background-image: url('https://nilababyshop.com/wp-content/uploads/2023/03/pngtree-simple-and-cute-baby-baptism-background-picture-image_1334701.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: #f8f9fa;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #add8e6;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        /* Stil für die Buttons der Bedienleiste */
+        .button-group button {
+            margin-right: 10px;
+        }
+
+        /* Stil für den mehrfarbigen Button */
+        .btn-multicolor {
+            background: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<!-- Hauptcontainer für die Inhalte der Seite -->
+<div class="container">
+    <h1 class="mb-4">Babycam</h1>
+    <!-- Video-Element für den Babyphone-Stream -->
+    <video controls autoplay>
+        <source src="{{ url_for('static', filename='live/video.m3u8') }}" type="application/x-mpegURL">
+        Your browser does not support the video tag.
+    </video>
+    <div class="row mt-3">
+        <!-- Buttons zum Steuern der Hama WLAN-Steckdose -->
+        <div class="col-6">
+            <button id="turn-on-light" class="btn btn-success btn-block">Turn On Light</button>
+        </div>
+        <div class="col-6">
+            <button id="turn-off-light" class="btn btn-danger btn-block">Turn Off Light</button>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <!-- Buttons zum Steuern der Blink-Lichter -->
+        <div class="col-6">
+            <button id="turn-bright-blink" class="btn btn-secondary btn-block">Camera Light</button>
+        </div>
+        <div class="col-6">
+            <button id="turn-pattern1-blink" class="btn btn-primary btn-block">Pattern 1</button>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-6">
+            <button id="turn-pattern2-blink" class="btn btn-multicolor btn-block">Pattern 2</button>
+        </div>
+        <div class="col-6">
+            <button id="turn-off-blink" class="btn btn-dark btn-block">Turn Off Blink</button>
+        </div>
+    </div>
+    <div class="mt-3">
+        <form action="/stop-stream" method="post">
+            <button type="submit" class="btn btn-warning btn-block">Stop Stream</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    // jQuery-Handler für Button-Klicks
+    $(document).ready(function () {
+        $('#turn-on-light').click(function (e) {
+            e.preventDefault();
+            $.post('/turn-on-light', function (data) {
+                console.log('Light turned on');
+            });
+        });
+
+        $('#turn-off-light').click(function (e) {
+            e.preventDefault();
+            $.post('/turn-off-light', function (data) {
+                console.log('Light turned off');
+            });
+        });
+
+        $('#turn-bright-blink').click(function (e) {
+            e.preventDefault();
+            $.post('/turn-bright-blink', function (data) {
+                console.log('Blink turned bright');
+            });
+        });
+
+        $('#turn-pattern1-blink').click(function (e) {
+            e.preventDefault();
+            $.post('/turn-pattern1-blink', function (data) {
+                console.log('Blink turned to pattern 1');
+            });
+        });
+
+        $('#turn-pattern2-blink').click(function (e) {
+            e.preventDefault.
+            $.post('/turn-pattern2-blink', function (data) {
+                console.log('Blink turned to pattern 2');
+            });
+        });
+
+        $('#turn-off-blink').click(function (e) {
+            e.preventDefault();
+            $.post('/turn-off-blink', function (data) {
+                console.log('Blink turned off');
+            });
+        });
+    });
+</script>
+</body>
+</html>

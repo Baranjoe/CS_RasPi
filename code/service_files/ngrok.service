@@ -1,0 +1,13 @@
+# Service-Datei für Ngrok Tunnel
+[Unit]
+Description=Ngrok Tunnel
+# Stellt sicher, dass das Netzwerk verfügbar ist, bevor der Service startet
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/ngrok http --domain=pure-implicitly-tadpole.ngrok-free.app 80
+Restart=on-failure
+User=baranjoe
+
+[Install]
+WantedBy=multi-user.target
